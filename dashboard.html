@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Türkçe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dash-body">
+
+  <div class="dash">
+
+    <aside class="sidebar">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">C</span>
+        <span>Türkçe</span>
+      </a>
+      <nav class="side-nav">
+        <a href="dashboard.html" class="active">🏠 Bosh sahifa</a>
+        <a href="testlar.html">📝 Testlar</a>
+        <a href="daraja.html">🎯 Daraja testi</a>
+        <a href="mashqlar.html">✍️ Mashqlar</a>
+        <a href="sozlar.html">🗣️ so'zlar</a>
+        <a href="rasmiy.html">🏛️ Rasmiy</a>
+        <a href="samimiy.html">💬 Samimiy</a>
+        <a href="darslar.html">📚 Darslar</a>
+        <a href="statistika.html">📊 Statistika</a>
+        <a href="profil.html">👤 Profil</a>
+        <a href="#" id="logoutLink">🚪 Chiqish</a>
+      </nav>
+    </aside>
+
+    <main class="dash-main">
+      <h2 id="greeting">Assalomu alaykum! 👋</h2>
+      <p class="dash-sub" id="dashSub">Bugungi maqsadingiz — yanada yaxshiroq bo'lish!</p>
+
+      <div class="stats">
+        <div class="stat s1"><b id="statWords">5</b><span>Bugungi so'zlar</span></div>
+        <div class="stat s2"><b id="statSaved">0</b><span>Saqlangan so'zlar</span></div>
+        <div class="stat s3"><b id="statTests">0</b><span>Testlar</span></div>
+        <div class="stat s4"><b id="statStreak">1</b><span>kun ketma-ket</span></div>
+      </div>
+
+      <div class="today-head">
+        <h3>Bugungi so'zlar</h3>
+        <a href="sozlar.html">Barchasini ko'rish →</a>
+      </div>
+
+      <div class="today-words" id="todayWords"></div>
+
+      <div class="banner">
+        <div>
+          <h4>Kichik qadamlar — katta natijalar!</h4>
+          <p>Har kuni 5 ta yangi so'z o'rganing va o'z darajangizni oshiring.</p>
+        </div>
+        <a href="darslar.html" class="btn btn-red">Bugungi dars</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="data.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

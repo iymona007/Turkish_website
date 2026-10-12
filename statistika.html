@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistika | Türkçe</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="statistika.js" defer></script>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">🇹🇷 Türkçe</a>
+
+        <nav>
+            <a href="dashboard.html">🏠 Bosh sahifa</a>
+            <a href="testlar.html">📝 Testlar</a>
+            <a href="daraja.html">🎯 Daraja testi</a>
+            <a href="mashqlar.html">✍️ Mashqlar</a>
+            <a href="darslar.html">📚 Darslar</a>
+            <a href="biz_haqimizda.html">ℹ️ Biz haqimizda</a>
+            <a href="statistika.html" class="active">📊 Statistika</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="welcome">
+            <span class="eyebrow">SIZNING NATIJALARINGIZ</span>
+            <h1>📊 Mening statistikalarim</h1>
+            <p>Har bir kichik qadam sizni maqsadingizga yaqinlashtiradi!</p>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card pink">
+                <div class="stat-icon">📚</div>
+                <p>O'rganilgan so'zlar</p>
+                <h2 id="learnedWords">0</h2>
+            </div>
+
+            <div class="stat-card purple">
+                <div class="stat-icon">❤️</div>
+                <p>Saqlangan so'zlar</p>
+                <h2 id="savedWords">0</h2>
+            </div>
+
+            <div class="stat-card blue">
+                <div class="stat-icon">📝</div>
+                <p>Ishlangan testlar</p>
+                <h2 id="completedTests">0</h2>
+            </div>
+
+            <div class="stat-card orange">
+                <div class="stat-icon">🔥</div>
+                <p>Ketma-ket kunlar</p>
+                <h2 id="streakDays">0</h2>
+            </div>
+        </section>
+
+        <section class="progress-card">
+            <h2>🎯 O'rganish jarayoni</h2>
+            <p>Darslar bo'yicha jarayoningiz</p>
+
+            <div class="progress-info">
+                <span>Darslar</span>
+                <span id="lessonProgressText">0 / 3</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="lessonProgress"></div>
+            </div>
+
+            <p class="motivation" id="motivation">
+                Bugun yangi so'z o'rganishni boshlang! 🌱
+            </p>
+        </section>
+
+        <a href="dashboard.html" class="back-btn">
+            ← Bosh sahifaga qaytish
+        </a>
+    </main>
+
+</body>
+</html>

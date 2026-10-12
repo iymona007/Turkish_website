@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil | Türkçe</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="logo">🇹🇷 Türkçe</a>
+
+        <nav>
+            <a href="dashboard.html">🏠 Bosh sahifa</a>
+            <a href="testlar.html">📝 Testlar</a>
+            <a href="mashqlar.html">✍️ Mashqlar</a>
+            <a href="darslar.html">📚 Darslar</a>
+            <a href="statistika.html">📊 Statistika</a>
+            <a href="profil.html" class="active">👤 Profil</a>
+        </nav>
+    </header>
+
+    <main class="container">
+
+        <section class="profile-card">
+            <div class="avatar" id="avatar">👤</div>
+
+            <h1 id="profileName">Foydalanuvchi</h1>
+            <p class="subtitle">Türkçe o'rganuvchisi 🇹🇷</p>
+
+            <label for="nameInput">Ismingiz</label>
+            <input
+                type="text"
+                id="nameInput"
+                placeholder="Ismingizni kiriting"
+                maxlength="40"
+            >
+
+            <label for="levelSelect">Turk tili darajangiz</label>
+            <select id="levelSelect">
+                <option value="Boshlang'ich">Boshlang'ich (A1)</option>
+                <option value="Elementar">Elementar (A2)</option>
+                <option value="O'rta">O'rta (B1)</option>
+                <option value="Yuqori">Yuqori (B2)</option>
+            </select>
+
+            <button type="button" id="saveBtn" class="save-btn">
+                💾 Profilni saqlash
+            </button>
+
+            <p id="message" class="message" aria-live="polite"></p>
+        </section>
+
+        <section class="info-card">
+            <h2>📊 Mening natijalarim</h2>
+
+            <div class="info-row">
+                <span>📚 O'rganilgan so'zlar</span>
+                <strong id="learnedWords">0</strong>
+            </div>
+
+            <div class="info-row">
+                <span>❤️ Saqlangan so'zlar</span>
+                <strong id="savedWords">0</strong>
+            </div>
+
+            <div class="info-row">
+                <span>📝 Ishlangan testlar</span>
+                <strong id="completedTests">0</strong>
+            </div>
+
+            <div class="info-row">
+                <span>🔥 Ketma-ket kunlar</span>
+                <strong id="streakDays">0</strong>
+            </div>
+        </section>
+
+        <a href="dashboard.html" class="back-btn">
+            ← Bosh sahifaga qaytish
+        </a>
+
+    </main>
+
+    <script src="profil.js"></script>
+</body>
+</html>

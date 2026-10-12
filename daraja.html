@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daraja testi | Türkçe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">C</span>
+      <span>Türkçe</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="darslar.html">Darslar</a>
+      <a href="sozlar.html">So'zlar</a>
+      <a href="rasmiy.html">Rasmiy</a>
+      <a href="samimiy.html">Samimiy</a>
+      <a href="mashqlar.html">Mashqlar</a>
+      <a href="testlar.html">Testlar</a>
+      <a href="biz_haqimizda.html">Biz haqimizda</a>
+    </nav>
+    <div class="auth">
+      <a href="kirish.html" class="login">Kirish</a>
+      <a href="royxat.html" class="btn btn-red">Ro'yxatdan o'tish</a>
+    </div>
+  </header>
+
+  <main class="quiz-page">
+
+    <div class="quiz-box" id="introBox">
+      <div class="result-emoji">🎯</div>
+      <h2 style="text-align:center; margin-bottom:8px;">Darajangizni aniqlang</h2>
+      <p class="intro-text">16 ta savol: A1 dan B2 gacha, oddiydan qiyinga. Natijaga qarab darajangiz aniqlanadi.</p>
+      <div class="result-buttons">
+        <button class="btn btn-red" id="startBtn">Boshlash</button>
+      </div>
+    </div>
+
+    <div class="quiz-box" id="quizBox" hidden>
+      <div class="quiz-top">
+        <span id="qCount">1 / 10</span>
+        <span id="qLevel">A1</span>
+      </div>
+      <div class="progress"><div class="progress-bar" id="qBar"></div></div>
+
+      <p class="q-label">Bu so'zning tarjimasi nima?</p>
+      <h2 id="qWord"></h2>
+      <button class="speak-btn big" id="qSpeak">🔊</button>
+      <div class="options" id="options"></div>
+
+      <div class="quiz-footer">
+        <span id="feedback"></span>
+        <button class="btn btn-red" id="qNext" disabled>Keyingi</button>
+      </div>
+    </div>
+
+    <div class="quiz-box result" id="resultBox" hidden>
+      <div class="level-badge" id="resLevel">A1</div>
+      <h2 id="resTitle"></h2>
+      <p id="resText"></p>
+      <p class="res-detail" id="resDetail"></p>
+      <div class="result-buttons">
+        <button class="btn btn-light" id="restart">Qayta topshirish</button>
+        <a href="dashboard.html" class="btn btn-red">Dashboard</a>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="data.js"></script>
+  <script src="daraja.js"></script>
+  <script src="nav.js"></script>
+</body>
+</html>

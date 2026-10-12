@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Samimiy so'zlar | Türkçe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">C</span>
+      <span>Türkçe</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="darslar.html">Darslar</a>
+      <a href="sozlar.html">So'zlar</a>
+      <a href="rasmiy.html">Rasmiy</a>
+      <a href="samimiy.html">Samimiy</a>
+      <a href="mashqlar.html">Mashqlar</a>
+      <a href="testlar.html">Testlar</a>
+      <a href="biz_haqimizda.html">Biz haqimizda</a>
+    </nav>
+    <div class="auth">
+      <a href="kirish.html" class="login">Kirish</a>
+      <a href="royxat.html" class="btn btn-red">Ro'yxatdan o'tish</a>
+    </div>
+  </header>
+
+  <main class="words-page">
+    <div class="words-top">
+      <div>
+        <h1>Samimiy so'zlar</h1>
+        <p class="words-sub">Do'stlar bilan gaplashish uchun oddiy, jonli so'z va iboralar.</p>
+      </div>
+      <input type="text" id="search" placeholder="So'z qidirish...">
+    </div>
+
+    <div class="categories" id="categories"></div>
+
+    <div class="words-grid" id="wordsGrid"></div>
+    <p id="empty" class="empty" hidden>Hech narsa topilmadi 😕</p>
+  </main>
+
+  <script src="samimiy.js"></script>
+  <script src="rasmiy-sahifa.js"></script>
+  <script src="nav.js"></script>
+</body>
+</html>

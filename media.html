@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video va seriallar | Türkçe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <a href="index.html" class="logo">
+      <span class="logo-icon">C</span>
+      <span>Türkçe</span>
+    </a>
+    <nav class="nav">
+      <a href="index.html">Bosh sahifa</a>
+      <a href="darslar.html">Darslar</a>
+      <a href="sozlar.html">So'zlar</a>
+      <a href="rasmiy.html">Rasmiy</a>
+      <a href="samimiy.html">Samimiy</a>
+      <a href="mashqlar.html">Mashqlar</a>
+      <a href="testlar.html">Testlar</a>
+      <a href="biz_haqimizda.html">Biz haqimizda</a>
+    </nav>
+    <div class="auth">
+      <a href="kirish.html" class="login">Kirish</a>
+      <a href="royxat.html" class="btn btn-red">Ro'yxatdan o'tish</a>
+    </div>
+  </header>
+
+  <main class="practice-page">
+    <h1>Video darsliklar va seriallar</h1>
+
+    <div class="categories">
+      <button class="cat mtab active" data-tab="video">🎬 Video darslar</button>
+      <button class="cat mtab" data-tab="serial">📺 Seriallar</button>
+    </div>
+
+    <select id="mediaLevel">
+      <option value="mine">Mening darajam</option>
+      <option value="A1">A1</option>
+      <option value="A2">A2</option>
+      <option value="B1">B1</option>
+      <option value="B2">B2</option>
+      <option value="all">Barcha darajalar</option>
+    </select>
+
+    <p class="level-info" id="mediaHint"></p>
+    <div id="mediaList"></div>
+  </main>
+
+  <script src="nav.js"></script>
+  <script src="data.js"></script>
+  <script src="media.js"></script>
+</body>
+</html>

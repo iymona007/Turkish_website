@@ -15,13 +15,21 @@
     </a>
     <nav class="nav">
       <a href="index.html">Bosh sahifa</a>
-      <a href="darslar.html">Darslar</a>
-      <a href="sozlar.html">So'zlar</a>
-      <a href="rasmiy.html">Rasmiy</a>
-      <a href="samimiy.html">Samimiy</a>
-      <a href="mashqlar.html">Mashqlar</a>
-      <a href="testlar.html">Testlar</a>
-      <a href="biz_haqimizda.html">Biz haqimizda</a>
+      <a href="#zamonlar">Zamonlar</a>
+      <a href="#test">Test</a>
+      <a href="dashboard.html" class="active">🏠 Bosh sahifa</a>
+      <a href="testlar.html">📝 Testlar</a>
+      <a href="daraja.html">🎯 Daraja testi</a>
+      <a href="mashqlar.html">✍️ Mashqlar</a>
+      <a href="sozlar.html">🗣️ so'zlar</a>
+      <a href="rasmiy.html">🏛️ Rasmiy</a>
+      <a href="samimiy.html">💬 Samimiy</a>
+      <a href="darslar.html">📚 Darslar</a>
+      <a href="statistika.html">📊 Statistika</a>
+      <a href="profil.html">👤 Profil</a>
+      <a href="media.html">media</a>
+     <a href="zamonlar.html">zamonlar</a>
+
     </nav>
     <div class="auth">
       <a href="kirish.html" class="login">Kirish</a>
@@ -39,7 +47,7 @@
       <div class="progress"><div class="progress-bar" id="qBar"></div></div>
 
       <div id="questionArea">
-        <p class="q-label">Bu so'zning tarjimasi nima?</p>
+        <p class="q-label" id="qLabel">Bu so'zning tarjimasi nima?</p>
         <h2 id="qWord"></h2>
         <button class="speak-btn big" id="qSpeak">🔊</button>
         <div class="options" id="options"></div>
@@ -51,6 +59,20 @@
       </div>
     </div>
 
+    <select id="levelSelect">
+    <option value="all">Barcha darajalar</option>
+    <option value="A1">A1 — Boshlang‘ich</option>
+    <option value="A2">A2 — Asosiy</option>
+    <option value="B1">B1 — O‘rta</option>
+    <option value="B2">B2 — Yuqoriroq</option>
+  </select>
+
+  <select id="dirSelect">
+    <option value="mix">Aralash</option>
+    <option value="tr-uz">Turkcha → O'zbekcha</option>
+    <option value="uz-tr">O'zbekcha → Turkcha</option>
+  </select>
+
     <div class="quiz-box result" id="resultBox" hidden>
       <div class="result-emoji" id="resEmoji">🎉</div>
       <h2 id="resTitle"></h2>
@@ -61,8 +83,20 @@
       </div>
     </div>
   </main>
-
+  <script>
+    window.addEventListener("error", function (e) {
+      var matn = e.target && e.target.src
+        ? "Fayl topilmadi: " + e.target.src
+        : "Xato: " + e.message + " (" + (e.filename || "").split("/").pop() + ":" + e.lineno + ")";
+      var d = document.createElement("div");
+      d.style.cssText = "background:#fee;color:#900;padding:12px;margin:12px;border-radius:8px;font-size:14px";
+      d.textContent = matn;
+      document.body.prepend(d);
+    }, true);
+  </script>
   <script src="nav.js"></script>
+  <script src="samimiy.js"></script>
+  <script src="rasmiy.js"></script>
   <script src="testlar.js"></script>
 </body>
 </html>

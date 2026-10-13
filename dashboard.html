@@ -1,65 +1,266 @@
+
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-auth="required">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e30a17">
   <title>Dashboard | Türkçe</title>
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8D%B5%3C/text%3E%3C/svg%3E">
+
   <link rel="stylesheet" href="style.css">
+  <script src="store.js"></script>
 </head>
+
 <body class="dash-body">
 
   <div class="dash">
 
+    <!-- CHAP MENYU -->
     <aside class="sidebar">
       <a href="index.html" class="logo">
-        <span class="logo-icon">C</span>
+        <span class="logo-icon">T</span>
         <span>Türkçe</span>
       </a>
+
       <nav class="side-nav">
-        <a href="dashboard.html" class="active">🏠 Bosh sahifa</a>
+        <a href="dashboard.html">🏠 Bosh sahifa</a>
         <a href="testlar.html">📝 Testlar</a>
         <a href="daraja.html">🎯 Daraja testi</a>
         <a href="mashqlar.html">✍️ Mashqlar</a>
-        <a href="sozlar.html">🗣️ so'zlar</a>
+        <a href="sozlar.html">🗣️ So'zlar</a>
         <a href="rasmiy.html">🏛️ Rasmiy</a>
-        <a href="samimiy.html">💬 Samimiy</a>
         <a href="darslar.html">📚 Darslar</a>
+        <a href="suhbatlar.html">💬 Suhbatlar</a>
         <a href="statistika.html">📊 Statistika</a>
         <a href="profil.html">👤 Profil</a>
-        <a href="#" id="logoutLink">🚪 Chiqish</a>
       </nav>
+
+      <button type="button" class="logout" data-logout>
+        🚪 Chiqish
+      </button>
     </aside>
 
+    <!-- ASOSIY QISM -->
     <main class="dash-main">
-      <h2 id="greeting">Assalomu alaykum! 👋</h2>
-      <p class="dash-sub" id="dashSub">Bugungi maqsadingiz — yanada yaxshiroq bo'lish!</p>
 
+      <h1 id="greeting">Assalomu alaykum! 👋</h1>
+
+      <p class="dash-sub" id="dashSub">
+        Bugungi maqsadingiz — yanada yaxshiroq bo'lish!
+      </p>
+
+      <!-- STATISTIKA -->
       <div class="stats">
-        <div class="stat s1"><b id="statWords">5</b><span>Bugungi so'zlar</span></div>
-        <div class="stat s2"><b id="statSaved">0</b><span>Saqlangan so'zlar</span></div>
-        <div class="stat s3"><b id="statTests">0</b><span>Testlar</span></div>
-        <div class="stat s4"><b id="statStreak">1</b><span>kun ketma-ket</span></div>
+        <div class="stat s1">
+          <b id="statWords">5</b>
+          <span>Bugungi so'zlar</span>
+        </div>
+
+        <div class="stat s2">
+          <b id="statSaved">0</b>
+          <span>Saqlangan so'zlar</span>
+        </div>
+
+        <div class="stat s3">
+          <b id="statTests">0</b>
+          <span>Testlar</span>
+        </div>
+
+        <div class="stat s4">
+          <b id="statStreak">1</b>
+          <span>kun ketma-ket</span>
+        </div>
       </div>
 
+      <!-- AVTOMATIK DARAJA KARTASI -->
+
+    <!-- DARAJA KARTASI -->
+    <section class="my-level-card">
+
+      <div class="level-circle">
+        <svg viewBox="0 0 120 120" aria-label="Til darajasi">
+          <circle
+            class="circle-bg"
+            cx="60" cy="60" r="50">
+          </circle>
+
+          <circle
+            class="circle-progress"
+            id="dashboardLevelCircle"
+            cx="60" cy="60" r="50">
+          </circle>
+        </svg>
+
+        <div class="circle-text">
+          <strong id="userLevel">—</strong>
+          <span>DARAJA</span>
+        </div>
+      </div>
+
+      <div class="level-info">
+        <span class="level-small-title">TURK TILI DARAJAM</span>
+
+        <h2 id="dashboardLevelTitle">
+          Hali aniqlanmagan
+        </h2>
+
+        <p id="dashboardLevelDesc">
+          Darajangizni aniqlash uchun testni topshiring.
+        </p>
+
+        <small id="dashboardLevelScore">
+          Test natijasi hali mavjud emas.
+        </small>
+
+        <br><br>
+
+        <a href="daraja.html" class="level-test-btn">
+          🎯 Daraja testini topshirish
+        </a>
+      </div>
+
+    </section>
+
+
+      <!-- BUGUNGI SO'ZLAR -->
       <div class="today-head">
-        <h3>Bugungi so'zlar</h3>
+        <h2>Bugungi so'zlar</h2>
         <a href="sozlar.html">Barchasini ko'rish →</a>
       </div>
 
       <div class="today-words" id="todayWords"></div>
 
+      <!-- TEZKOR BO'LIMLAR -->
+      <div class="quick">
+
+        <a href="daraja.html">
+          <span class="q-ico">🎯</span>
+          <div>
+            <b>Daraja testi</b>
+            <span>Darajangizni aniqlang</span>
+          </div>
+        </a>
+
+        <a href="mashqlar.html">
+          <span class="q-ico">✍️</span>
+          <div>
+            <b>Mashqlar</b>
+            <span>Juftlash, tinglash, yozish</span>
+          </div>
+        </a>
+
+        <a href="testlar.html">
+          <span class="q-ico">📝</span>
+          <div>
+            <b>Testlar</b>
+            <span>Bilimingizni sinang</span>
+          </div>
+        </a>
+
+        <a href="suhbatlar.html">
+          <span class="q-ico">💬</span>
+          <div>
+            <b>7 ta suhbat</b>
+            <span>Turkcha dialoglarni o'rganing</span>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- BANNER -->
       <div class="banner">
         <div>
           <h4>Kichik qadamlar — katta natijalar!</h4>
-          <p>Har kuni 5 ta yangi so'z o'rganing va o'z darajangizni oshiring.</p>
-        </div>
-        <a href="darslar.html" class="btn btn-red">Bugungi dars</a>
-      </div>
-    </main>
 
+          <p id="bannerText">
+            Har kuni 5 ta yangi so'z o'rganing va o'z darajangizni oshiring.
+          </p>
+        </div>
+
+        <a href="darslar.html" class="btn btn-red" id="bannerBtn">
+          Bugungi dars
+        </a>
+      </div>
+
+    </main>
   </div>
 
+  <!-- ESKI JS FAYLLARING -->
   <script src="data.js"></script>
   <script src="dashboard.js"></script>
+  <script src="nav.js"></script>
+
+<script>
+(function () {
+  const levelName = document.getElementById("dashboardLevelTitle");
+  const levelDesc = document.getElementById("dashboardLevelDesc");
+  const levelText = document.getElementById("userLevel");
+  const levelCircle = document.getElementById("dashboardLevelCircle");
+  const levelScore = document.getElementById("dashboardLevelScore");
+
+  function showLevel() {
+    const savedResult = localStorage.getItem("turkcePlacementResult");
+
+    if (!savedResult) {
+      levelName.textContent = "Hali aniqlanmagan";
+      levelDesc.textContent = "Darajangizni aniqlash uchun testni topshiring.";
+      levelText.textContent = "—";
+      levelCircle.style.strokeDashoffset = 314.16;
+      levelScore.textContent = "Test natijasi hali mavjud emas.";
+      return;
+    }
+
+    try {
+      const result = JSON.parse(savedResult);
+
+      if (!result.code) {
+        throw new Error("Daraja kodi topilmadi");
+      }
+
+      levelText.textContent = result.code;
+      levelName.textContent =
+        result.code + " — " + (result.name || "");
+
+      levelDesc.textContent =
+        result.desc || "O‘rganishni davom ettiring!";
+
+      const progress = Math.max(
+        0,
+        Math.min(100, Number(result.progress) || 0)
+      );
+
+      levelCircle.style.strokeDashoffset =
+        314.16 * (1 - progress / 100);
+
+      levelScore.textContent =
+        "Natija: " + (result.score ?? 0) + "/18 (" +
+        (result.percent ?? 0) + "%)";
+
+    } catch (error) {
+      console.error("Daraja xatosi:", error);
+
+      levelText.textContent = "—";
+      levelName.textContent = "Daraja aniqlanmadi";
+      levelDesc.textContent = "Test natijasini tekshirish kerak.";
+      levelCircle.style.strokeDashoffset = 314.16;
+      levelScore.textContent = "Natijani o‘qib bo‘lmadi.";
+    }
+  }
+
+  showLevel();
+  window.addEventListener("pageshow", showLevel);
+})();
+
+console.log("Saqlangan kalitlar:", Object.keys(localStorage));
+
+for (const key of Object.keys(localStorage)) {
+  console.log(key, localStorage.getItem(key));
+}
+
+</script>
+
+
 </body>
 </html>

@@ -122,7 +122,32 @@ function showResult() {
   document.getElementById("resDetail").textContent =
     ["A1", "A2", "B1", "B2"].map(l => `${l}: ${scores[l]} / ${PER_LEVEL}`).join("  •  ");
 
-  localStorage.setItem("userLevel", level);
+const totalCorrect = Object.values(scores).reduce(
+  (sum, score) => sum + score,
+  0
+);
+
+const percent = Math.round((totalCorrect / TOTAL) * 100);
+
+const progress = Math.round(
+  (scores[level] / PER_LEVEL) * 100
+);
+
+const result = {
+  code: level,
+  name: level === "A0" ? "Boshlang‘ich" : level,
+  desc: text,
+  score: totalCorrect,
+  percent: percent,
+  progress: progress
+};
+
+localStorage.setItem("userLevel", level);
+localStorage.setItem(
+  "turkcePlacementResult",
+  JSON.stringify(result)
+);
+
 }
 
 document.getElementById("startBtn").addEventListener("click", startTest);

@@ -20,7 +20,7 @@ document.getElementById("savedWords").textContent =
     savedWords.length;
 
 // Darslar soni
-const totalLessons = 3;
+const totalLessons = Number(localStorage.getItem("totalLessons")) || 3;
 
 const currentLesson = Number(
     localStorage.getItem("currentLesson") || 0

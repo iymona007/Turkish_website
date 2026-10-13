@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7 ta turkcha suhbat | TürkçeLab</title>
+  <link rel="stylesheet" href="suhbatlar.css">
+  <script src="suhbatlar.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html"><span class="brand-mark">T</span><span>Türkçe<span class="brand-light">Lab</span></span></a>
+    <nav><a href="dashboard.html">Dashboard</a><a class="active" href="suhbatlar.html">Suhbatlar</a></nav>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">AMALIY TURKCHA</p>
+      <h1>7 ta kundalik suhbat 💬</h1>
+      <p>Turkcha dialoglarni o‘qi, tarjimasini och va talaffuzini tinglash uchun 🔊 tugmasini bos.</p>
+      <div class="hero-tags"><span>🇹🇷 Turkcha</span><span>🇺🇿 O‘zbekcha tarjima</span><span>🔊 Talaffuz</span></div>
+    </section>
+    <div class="toolbar">
+      <label class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="Suhbat qidirish..."></label>
+      <select id="levelFilter" aria-label="Darajani tanlash"><option value="all">Barcha darajalar</option><option value="A1">A1 — Boshlang‘ich</option><option value="A2">A2 — Elementar</option><option value="B1">B1 — O‘rta</option></select>
+    </div>
+    <section id="dialogueGrid" class="dialogue-grid"></section>
+    <p id="emptyMessage" class="empty-message" hidden>Suhbat topilmadi. Boshqa so‘z bilan qidirib ko‘r.</p>
+    <p class="footer-note"><a href="dashboard.html">← Dashboardga qaytish</a></p>
+  </main>
+</body>
+</html>

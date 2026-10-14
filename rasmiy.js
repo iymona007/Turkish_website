@@ -308,6 +308,7 @@ Object.assign(RASMIY_CATEGORIES, {
   resmi_islem: "Rasmiy ishlar va hujjatlar",
   teknoloji: "Texnologiya",
   alisveris: "Savdo va xarid",
+  rasmiyTest: "hamma sozlarni testi"
 });
 
 // [turkcha, talaffuz, o'zbekcha, kategoriya, daraja, emoji, misol gap, gap tarjimasi]
@@ -578,3 +579,426 @@ RASMIY_WORDS.forEach(w => {
   const e = RASMIY_EX[w.tr];
   if (e) { w.ex = e[0]; w.exUz = e[1]; }
 });
+
+
+// ===============================
+// RASMIY SO'ZLAR TESTI
+// ===============================
+
+(function () {
+  // Eski test mavjud bo'lsa, qayta yaratmaymiz
+  if (document.getElementById("rasmiyTest")) return;
+
+  const style = document.createElement("style");
+
+  style.textContent = `
+    #rasmiyTest {
+      max-width: 650px;
+      margin: 35px auto;
+      padding: 24px;
+      background: #ffffff;
+      color: #202124;
+      border: 1px solid #e5e7eb;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.08);
+      font-family: Arial, sans-serif;
+    }
+
+    #rasmiyTest * {
+      box-sizing: border-box;
+    }
+
+    #rasmiyTest .rt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    #rasmiyTest .rt-muted {
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    #rasmiyTest .rt-circle {
+      width: 76px;
+      height: 76px;
+      border: 5px solid #e30a17;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+      color: #e30a17;
+    }
+
+    #rasmiyTest .rt-word {
+      margin: 24px 0 10px;
+      font-size: 30px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #rasmiyTest .rt-question {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #rasmiyTest .rt-option {
+      width: 100%;
+      padding: 13px;
+      margin: 6px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      background: #f9fafb;
+      color: #202124;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    #rasmiyTest .rt-option:hover:not(:disabled) {
+      border-color: #e30a17;
+      background: #fff1f2;
+    }
+
+    #rasmiyTest .rt-option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    #rasmiyTest .rt-option.correct {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #166534;
+    }
+
+    #rasmiyTest .rt-option.wrong {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #991b1b;
+    }
+
+    #rasmiyTest .rt-feedback {
+      min-height: 24px;
+      margin: 14px 0;
+      font-weight: bold;
+    }
+
+    #rasmiyTest .rt-next {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #e30a17;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #rasmiyTest .rt-next:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    #rasmiyTest .rt-start {
+      text-align: center;
+      padding: 20px 0;
+    }
+  `;
+
+  document.head.appendChild(style);
+
+  const section = document.createElement("section");
+  section.id = "rasmiyTest";
+
+  section.innerHTML = `
+    <div class="rt-header">
+      <div>
+        <h2>📚 Rasmiy so'zlar testi</h2>
+        <p class="rt-muted" id="rtProgress">
+          Turkcha so'zlarni bilimingizni tekshiring.
+        </p>
+      </div>
+      <div class="rt-circle" id="rtCircle">0%</div>
+    </div>
+
+    <div class="rt-start" id="rtStart">
+      <p id="rtCount"></p>
+      <p class="rt-muted">
+        Har bir savolda to'g'ri o'zbekcha tarjimani tanlang.
+      </p>
+      <button type="button" class="rt-next" id="rtStartBtn">
+        Testni boshlash
+      </button>
+    </div>
+
+    <div id="rtGame" hidden>
+      <div class="rt-word" id="rtWord"></div>
+      <p class="rt-question" id="rtQuestion"></p>
+      <div id="rtOptions"></div>
+      <p class="rt-feedback" id="rtFeedback"></p>
+      <p id="rtScore">⭐ 0 ball</p>
+      <button type="button" class="rt-next" id="rtNext" disabled>
+        Javobni tanlang
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(section);
+
+  const $ = id => document.getElementById(id);
+
+  let questions = [];
+  let current = 0;
+  let score = 0;
+  let answered = false;
+
+  function shuffle(items) {
+    const result = [...items];
+
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+
+    return result;
+  }
+
+  function startTest() {
+    if (typeof RASMIY_WORDS === "undefined" ||
+        !Array.isArray(RASMIY_WORDS)) {
+      $("rtFeedback").textContent =
+        "RASMIY_WORDS topilmadi. rasmiy.js kodini tekshiring.";
+      return;
+    }
+
+    // Array ko'rinishidagi eski so'zlarni ham qo'llab-quvvatlash
+    const normalized = RASMIY_WORDS.map(item => {
+      if (!Array.isArray(item)) return item;
+
+      const [tr, pron, uz, cat, level, emoji, ex, exUz] = item;
+
+      return { tr, pron, uz, cat, level, emoji, ex, exUz };
+    });
+
+    // Takrorlangan va noto'liq so'zlarni olib tashlash
+    const unique = [
+      ...new Map(
+        normalized
+          .filter(w =>
+            w &&
+            typeof w.tr === "string" &&
+            w.tr.trim() &&
+            typeof w.uz === "string" &&
+            w.uz.trim()
+          )
+          .map(w => [
+            w.tr.trim().toLocaleLowerCase("tr-TR"),
+            { ...w, tr: w.tr.trim(), uz: w.uz.trim() }
+          ])
+      ).values()
+    ];
+
+    if (unique.length < 4) {
+      $("rtCount").textContent =
+        "Test uchun kamida 4 ta tarjimasi bor so'z kerak.";
+      return;
+    }
+
+    questions = shuffle(unique);
+    current = 0;
+    score = 0;
+    answered = false;
+
+    $("rtStart").hidden = true;
+    $("rtGame").hidden = false;
+
+    showQuestion();
+  }
+
+  function showQuestion() {
+    if (current >= questions.length) {
+      showResult();
+      return;
+    }
+
+    answered = false;
+
+    const word = questions[current];
+
+    $("rtProgress").textContent =
+      `Savol ${current + 1} / ${questions.length}`;
+
+    $("rtCircle").textContent =
+      `${Math.round((score / questions.length) * 100)}%`;
+
+    $("rtWord").textContent =
+      `${word.emoji || "📘"} ${word.tr}`;
+
+    $("rtQuestion").textContent =
+      "Bu so'zning o'zbekcha tarjimasi nima?";
+
+    $("rtFeedback").textContent = "";
+    $("rtOptions").innerHTML = "";
+    $("rtScore").textContent = `⭐ ${score} ball`;
+
+    // Bir xil tarjimali so'zlar noto'g'ri variant bo'lmaydi
+    const others = shuffle(
+      questions.filter(w =>
+        w.tr !== word.tr &&
+        w.uz.toLocaleLowerCase() !==
+          word.uz.toLocaleLowerCase()
+      )
+    ).slice(0, 3);
+
+    const choices = shuffle([word, ...others]);
+
+    choices.forEach(choice => {
+      const button = document.createElement("button");
+
+      button.type = "button";
+      button.className = "rt-option";
+      button.textContent = choice.uz;
+
+      button.addEventListener("click", () => {
+        if (answered) return;
+
+        answered = true;
+
+        const correct = choice.tr === word.tr;
+
+        [...$("rtOptions").querySelectorAll(".rt-option")]
+          .forEach(btn => {
+            btn.disabled = true;
+
+            if (btn.dataset.correct === "true") {
+              btn.classList.add("correct");
+            }
+          });
+
+        if (correct) {
+          score++;
+          $("rtFeedback").textContent = "✅ To'g'ri javob!";
+        } else {
+          button.classList.add("wrong");
+          $("rtFeedback").textContent =
+            `❌ To'g'ri javob: ${word.uz}`;
+        }
+
+        $("rtScore").textContent = `⭐ ${score} ball`;
+
+        $("rtCircle").textContent =
+          `${Math.round((score / questions.length) * 100)}%`;
+
+        $("rtNext").disabled = false;
+        $("rtNext").textContent =
+          current === questions.length - 1
+            ? "Natijani ko'rish"
+            : "Keyingi savol";
+      });
+
+      button.dataset.correct = String(choice.tr === word.tr);
+
+      $("rtOptions").appendChild(button);
+    });
+
+    // Turkcha talaffuz tugmasi
+
+// Turkcha so'zni ovoz chiqarib o'qish
+const sound = document.createElement("button");
+
+sound.type = "button";
+sound.className = "rt-option";
+sound.textContent = "🔊 So'zni eshitish";
+
+sound.addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    $("rtFeedback").textContent =
+      "Brauzeringiz ovozli o'qishni qo'llab-quvvatlamaydi.";
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(word.tr);
+  utterance.lang = "tr-TR";
+  utterance.rate = 0.8;
+  utterance.volume = 1;
+
+  const voices = window.speechSynthesis.getVoices();
+  const turkishVoice = voices.find(voice =>
+    voice.lang.toLowerCase().startsWith("tr")
+  );
+
+  if (turkishVoice) {
+    utterance.voice = turkishVoice;
+  }
+
+  utterance.onerror = () => {
+    $("rtFeedback").textContent =
+      "Ovoz ishlamadi. Brauzer ovoz sozlamalarini tekshiring.";
+  };
+
+  window.speechSynthesis.speak(utterance);
+});
+
+$("rtOptions").appendChild(sound);
+
+      $("rtOptions").appendChild(sound);
+    }
+
+    $("rtNext").disabled = true;
+    $("rtNext").textContent = "Javobni tanlang";
+  
+
+  function showResult() {
+    $("rtProgress").textContent = "Test yakunlandi! 🎉";
+    $("rtWord").textContent = "🏆 Natijangiz";
+
+    $("rtQuestion").textContent =
+      `${questions.length} ta savoldan ${score} tasiga to'g'ri javob berdingiz.`;
+
+    $("rtCircle").textContent =
+      `${Math.round((score / questions.length) * 100)}%`;
+
+    $("rtOptions").innerHTML = "";
+
+    const message = document.createElement("p");
+    message.className = "rt-muted";
+
+    message.textContent =
+      score === questions.length
+        ? "Ajoyib! Barcha javoblaringiz to'g'ri! 🎉"
+        : score >= questions.length * 0.7
+        ? "Juda yaxshi! Yana mashq qiling. 💪"
+        : "Yaxshi urinish! So'zlarni yana takrorlang. 📚";
+
+    $("rtFeedback").replaceChildren(message);
+    $("rtScore").textContent = `⭐ ${score} ball`;
+
+    $("rtNext").textContent = "Qayta ishlash";
+    $("rtNext").disabled = false;
+  }
+
+  $("rtStartBtn").addEventListener("click", startTest);
+
+  $("rtNext").addEventListener("click", () => {
+    if ($("rtNext").textContent === "Qayta ishlash") {
+      startTest();
+      return;
+    }
+
+    if (!answered) return;
+
+    current++;
+    showQuestion();
+  });
+
+  $("rtCount").textContent =
+    "Test barcha rasmiy so'zlarni qamrab oladi.";
+})();
+
+window.RASMIY_WORDS = RASMIY_WORDS;

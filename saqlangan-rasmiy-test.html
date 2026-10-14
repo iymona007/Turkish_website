@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e30a17">
+  <title>Türkçe | So‘zlar testlari</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #fff1f2, #f8fafc, #fce7f3);
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 25px auto;
+      padding: 24px;
+      background: white;
+      border-radius: 22px;
+      box-shadow: 0 10px 35px #00000012;
+    }
+
+    .test-menu {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 13px 8px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      background: white;
+      color: #4b5563;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tab.active.official {
+      color: white;
+      background: #e30a17;
+      border-color: #e30a17;
+    }
+
+    .tab.active.friendly {
+      color: white;
+      background: #db2777;
+      border-color: #db2777;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 23px;
+      line-height: 1.4;
+    }
+
+    .official-title {
+      color: #e30a17;
+    }
+
+    .friendly-title {
+      color: #be185d;
+    }
+
+    .circle {
+      width: 72px;
+      height: 72px;
+      min-width: 72px;
+      border: 5px solid #e30a17;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: bold;
+    }
+
+    .friendly-circle {
+      border-color: #db2777;
+    }
+
+    .muted {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .word {
+      margin: 30px 0 15px;
+      text-align: center;
+      font-size: 32px;
+      overflow-wrap: anywhere;
+    }
+
+    .question {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .option {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      background: #f9fafb;
+      text-align: left;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .official-mode .option:hover:not(:disabled) {
+      border-color: #e30a17;
+      background: #fff1f2;
+    }
+
+    .friendly-mode .option:hover:not(:disabled) {
+      border-color: #db2777;
+      background: #fdf2f8;
+    }
+
+    .option:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+    }
+
+    .wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+    }
+
+    .feedback {
+      min-height: 25px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: #e30a17;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .friendly-mode .btn {
+      background: #db2777;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 450px) {
+      body {
+        padding: 12px;
+      }
+
+      .container {
+        padding: 17px;
+      }
+
+      h1 {
+        font-size: 19px;
+      }
+
+      .word {
+        font-size: 27px;
+      }
+
+      .circle {
+        width: 62px;
+        height: 62px;
+        min-width: 62px;
+        font-size: 14px;
+      }
+
+      .tab {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container" id="app">
+
+    <!-- IKKALA TEST UCHUN UMUMIY TUGMALAR -->
+    <nav class="test-menu">
+      <button class="tab active official" id="officialTab">
+        📘 Rasmiy test
+      </button>
+
+      <button class="tab friendly" id="friendlyTab">
+        💗 Samimiy test
+      </button>
+    </nav>
+
+    <div class="top">
+      <div>
+        <h1 id="title" class="official-title">
+          📘 Saqlangan rasmiy so‘zlar
+        </h1>
+
+        <p class="muted" id="progress">
+          O‘rgangan so‘zlaringni sinab ko‘r!
+        </p>
+      </div>
+
+      <div class="circle" id="circle">0%</div>
+    </div>
+
+    <section id="intro">
+      <p class="muted" id="introText">
+        Saqlangan rasmiy turkcha so‘zlaringni takrorla.
+      </p>
+
+      <button class="btn" id="startBtn">Testni boshlash</button>
+    </section>
+
+    <section id="game" class="hidden">
+      <h2 class="word" id="word"></h2>
+
+      <p class="question" id="question">
+        Bu so‘zning o‘zbekcha tarjimasi nima?
+      </p>
+
+      <div id="options"></div>
+
+      <p class="feedback" id="feedback" aria-live="polite"></p>
+      <p id="score">⭐ 0 ball</p>
+
+      <button class="btn" id="nextBtn" disabled>
+        Keyingi savol
+      </button>
+    </section>
+
+    <section id="result" class="hidden">
+      <h2>🏆 Test natijasi</h2>
+      <p id="resultText"></p>
+      <p class="feedback" id="resultFeedback"></p>
+
+      <button class="btn" id="restartBtn">🔄 Qayta ishlash</button>
+    </section>
+
+  </main>
+
+  <!-- So‘zlar bazalari. Ikkala fayl ham o‘z holicha qoladi. -->
+  <script src="./rasmiy.js"></script>
+  <script src="./samimiy.js"></script>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    let mode = "official";
+    let questions = [];
+    let current = 0;
+    let score = 0;
+    let answered = false;
+
+    function shuffle(items) {
+      const result = [...items];
+
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+
+      return result;
+    }
+
+    function normalizeWord(item) {
+      if (!item || typeof item !== "object") return null;
+
+      return {
+        tr: item.tr || item.turkcha || item.word || "",
+        uz: item.uz || item.uzbekcha || item.translation || item.meaning || "",
+        emoji: item.emoji || "💬",
+        pron: item.pron || item.talaffuz || ""
+      };
+    }
+
+    function getDatabase() {
+      if (mode === "official") {
+        return Array.isArray(window.RASMIY_WORDS)
+          ? window.RASMIY_WORDS
+          : [];
+      }
+
+      const names = [
+        window.SAMIMIY_WORDS,
+        window.samimiyWords,
+        window.SAMIMIY_WORDS_ALL
+      ];
+
+      return names.find(Array.isArray) || [];
+    }
+
+    function getSavedWords() {
+      const keys = mode === "official"
+        ? ["savedWords", "savedRasmiyWords", "savedOfficialWords"]
+        : ["savedSamimiyWords", "savedWords", "samimiySavedWords"];
+
+      for (const key of keys) {
+        try {
+          const data = JSON.parse(localStorage.getItem(key) || "null");
+
+          if (Array.isArray(data) && data.length) {
+            return data.map(item => {
+              if (typeof item === "string") return item;
+
+              return item.tr || item.turkcha || item.word || "";
+            }).filter(Boolean);
+          }
+        } catch (error) {
+          console.warn("Saqlangan so‘zlarni o‘qib bo‘lmadi:", key);
+        }
+      }
+
+      return [];
+    }
+
+    function loadQuestions() {
+      const database = getDatabase()
+        .map(normalizeWord)
+        .filter(item => item && item.tr.trim() && item.uz.trim());
+
+      if (!database.length) {
+        alert(
+          mode === "official"
+            ? "Rasmiy baza topilmadi. rasmiy.js faylini tekshir."
+            : "Samimiy baza topilmadi. samimiy.js faylini tekshir."
+        );
+        return false;
+      }
+
+      const saved = getSavedWords();
+
+      // Faqat saqlangan so‘zlar bo‘lsa, ularni testga olamiz.
+      const savedSet = new Set(
+        saved.map(word => word.trim().toLocaleLowerCase("tr-TR"))
+      );
+
+      const savedQuestions = database.filter(item =>
+        savedSet.has(item.tr.trim().toLocaleLowerCase("tr-TR"))
+      );
+
+      if (!saved.length) {
+        alert(
+          "Hozircha saqlangan so‘zlar topilmadi. Avval saytingda so‘zlarni saqla."
+        );
+        return false;
+      }
+
+      if (!savedQuestions.length) {
+        alert(
+          "Saqlangan so‘zlar ushbu baza bilan mos kelmadi. Saqlash kaliti yoki so‘zlar nomini tekshirish kerak."
+        );
+        return false;
+      }
+
+      questions = shuffle(savedQuestions);
+      return true;
+    }
+
+    function changeMode(nextMode) {
+      mode = nextMode;
+
+      $("app").classList.toggle("official-mode", mode === "official");
+      $("app").classList.toggle("friendly-mode", mode === "friendly");
+
+      $("officialTab").classList.toggle("active", mode === "official");
+      $("friendlyTab").classList.toggle("active", mode === "friendly");
+
+      $("title").textContent = mode === "official"
+        ? "📘 Saqlangan rasmiy so‘zlar"
+        : "💗 Saqlangan samimiy so‘zlar";
+
+      $("title").className = mode === "official"
+        ? "official-title"
+        : "friendly-title";
+
+      $("circle").className = mode === "official"
+        ? "circle"
+        : "circle friendly-circle";
+
+      $("introText").textContent = mode === "official"
+        ? "Saqlangan rasmiy turkcha so‘zlaringni takrorla."
+        : "Saqlangan samimiy turkcha so‘zlaringni takrorla.";
+
+      $("intro").classList.remove("hidden");
+      $("game").classList.add("hidden");
+      $("result").classList.add("hidden");
+
+      $("progress").textContent = "O‘rgangan so‘zlaringni sinab ko‘r!";
+      $("circle").textContent = "0%";
+    }
+
+    function startTest() {
+      if (!loadQuestions()) return;
+
+      current = 0;
+      score = 0;
+      answered = false;
+
+      $("intro").classList.add("hidden");
+      $("result").classList.add("hidden");
+      $("game").classList.remove("hidden");
+
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        showResult();
+        return;
+      }
+
+      answered = false;
+
+      const word = questions[current];
+
+      $("progress").textContent =
+        `Savol ${current + 1} / ${questions.length}`;
+
+      $("circle").textContent =
+        Math.round(score / questions.length * 100) + "%";
+
+      $("word").textContent =
+        `${word.emoji} ${word.tr}` +
+        (word.pron ? ` (${word.pron})` : "");
+
+      $("question").textContent =
+        "Bu so‘zning o‘zbekcha tarjimasi nima?";
+
+      $("feedback").textContent = "";
+      $("options").innerHTML = "";
+      $("score").textContent = `⭐ ${score} ball`;
+      $("nextBtn").disabled = true;
+      $("nextBtn").textContent = "Keyingi savol";
+
+      const others = shuffle(
+        questions.filter(item =>
+          item.tr !== word.tr && item.uz !== word.uz
+        )
+      ).slice(0, 3);
+
+      const choices = shuffle([word, ...others]);
+
+      choices.forEach(choice => {
+        const button = document.createElement("button");
+        button.className = "option";
+        button.textContent = choice.uz;
+
+        button.addEventListener("click", () => {
+          if (answered) return;
+
+          answered = true;
+
+          document.querySelectorAll("#options .option")
+            .forEach(btn => {
+              btn.disabled = true;
+
+              if (btn.textContent === word.uz) {
+                btn.classList.add("correct");
+              }
+            });
+
+          if (choice.tr === word.tr) {
+            score++;
+            $("feedback").textContent = "✅ To‘g‘ri javob!";
+            $("feedback").style.color = "#15803d";
+          } else {
+            button.classList.add("wrong");
+            $("feedback").textContent = `❌ To‘g‘ri javob: ${word.uz}`;
+            $("feedback").style.color = "#dc2626";
+          }
+
+          $("score").textContent = `⭐ ${score} ball`;
+          $("circle").textContent =
+            Math.round(score / questions.length * 100) + "%";
+
+          $("nextBtn").disabled = false;
+          $("nextBtn").textContent =
+            current === questions.length - 1
+              ? "Natijani ko‘rish 🏆"
+              : "Keyingi savol →";
+        });
+
+        $("options").appendChild(button);
+      });
+    }
+
+    function showResult() {
+      $("game").classList.add("hidden");
+      $("result").classList.remove("hidden");
+
+      const percent = Math.round(score / questions.length * 100);
+
+      $("progress").textContent = "Test yakunlandi! 🎉";
+      $("circle").textContent = percent + "%";
+
+      $("resultText").textContent =
+        `${questions.length} ta savoldan ${score} tasiga to‘g‘ri javob berding.`;
+
+      $("resultFeedback").textContent =
+        percent === 100
+          ? "Ajoyib! Barcha javoblar to‘g‘ri! 🎉"
+          : percent >= 70
+          ? "Juda yaxshi! Yana mashq qil! 💪"
+          : "Yaxshi urinish! So‘zlarni takrorla! 📚";
+    }
+
+    $("officialTab").addEventListener("click", () => {
+      changeMode("official");
+    });
+
+    $("friendlyTab").addEventListener("click", () => {
+      changeMode("friendly");
+    });
+
+    $("startBtn").addEventListener("click", startTest);
+    $("restartBtn").addEventListener("click", startTest);
+
+    $("nextBtn").addEventListener("click", () => {
+      if (!answered) return;
+
+      current++;
+      showQuestion();
+    });
+
+    changeMode("official");
+  </script>
+</body>
+</html>

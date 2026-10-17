@@ -164,4 +164,3 @@ root.querySelectorAll(".tab").forEach(t => t.onclick = () => { cat = t.dataset.c
 
 reset();
 })();
-document.querySelectorAll("script").forEach(s => console.log(s.src || "(sahifa ichidagi skript)"));
